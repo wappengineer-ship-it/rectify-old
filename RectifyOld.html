@@ -1,0 +1,1523 @@
+<html>
+<head>
+<title>Rectify</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=11">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.ico" type="image/x-icon">';
+<style> body {overflow-x: hidden} button:hover {outline: 2px solid rgb(100,100,100)} button:focus {outline: 2px solid rgb(100,100,100)}
+ input:hover {outline: 2px solid rgb(100,100,100)} input:focus {outline: 2px solid rgb(100,100,100)}
+ textarea:hover {outline: 2px solid rgb(100,100,100)} textarea:focus {outline: 2px solid rgb(100,100,100)}
+</style>
+</head>';
+<body style="padding:0px; background-color:rgb(97, 97, 97); margin:0px">
+<div id = "xOuterFrame" style = "position: fixed; top:0; left:0; right:0; bottom:0; overflow:auto; background-color:lightgray"><br/><br/><span style = "font-family:sans-serif; font-size:28px">' + x.SystemName + ' base code loading...</span><br /></div>
+<script>
+
+var x = {};
+
+
+x.e = function (p_id) {
+    return document.getElementById(p_id);
+};
+
+x.rf = function (pScale) { //rf = Relative Font size
+    return Math.round(pScale * x.FontSize) + 'px';
+};
+
+x.GetMainDiv = function (p_id) {
+    return '<div id = "' + p_id + '" style = "width:100%; display:none"></div>';
+};
+
+x.sp = function (pHeight) { //GetSpacer
+    return '<div style="width:100%; height:' + x.rf(pHeight) + '"></div>';
+};
+
+x.GetHeading = function (pText, optionalAlign) {
+    optionalAlign = optionalAlign || 'left';
+    var padding = x.rf(0.3) + ' ' + x.rf(0.2) + ' ' + x.rf(0.3) + ' ' + x.rf(0.4);
+    return '<div style = "text-align: ' + optionalAlign + '; color:white; border-radius:' + x.rf(0.3) + ';  background-color: gray ; width:98%; padding:' + padding + '; font-weight:bold; font-size:' + x.rf(1.1) + '">' + pText + '</div>';
+};
+
+x.GetButton = function (pText, pOnClick, pWidth, optional_id, optionalPadding, optionalAlign) {
+    optionalPadding = optionalPadding || 0.55;
+    optionalAlign = optionalAlign || 'center';
+    var id = '';
+    if (optional_id) {
+        id = 'id = "' + optional_id + '"';
+    }
+    return '<button ' + id + ' onclick = "' + pOnClick + '" style = "border: 5px solid white;background-color:lightgray; color: '+ x.ThemeColor2 +';border-radius:' + x.rf(0.3) + '; text-align:' + optionalAlign + '; width:' + pWidth + '%; padding:' + x.rf(optionalPadding) + '; font-size:' + x.rf(1.1) + '; ">' + pText + '</button>';
+};
+
+
+x.Show = function (pScreen) {
+    pScreen.div.style.display = 'inline-block';
+    scrollTo(0, pScreen.pageYOffset || 0);
+};
+
+x.Hide = function (pScreen) {
+    pScreen.pageYOffset = pageYOffset;
+    pScreen.div.style.display = 'none';
+};
+
+x.ShowElement = function (p_id) {
+    var e = x.e(p_id);
+    e.style.display = 'inline-block';
+};
+
+x.HideElement = function (p_id) {
+    var e = x.e(p_id);
+    e.style.display = 'none';
+};
+
+
+var x050 = {}; // fight
+x050.Begin = function (pCaller, pHeading, pMessage, pCallback) {
+    //x100.PoisonBombs = 4;
+    
+    x.Hide(pCaller);
+    
+    //x100.Paint(1)
+    
+    var h = x.sp(1) + x.GetHeading(pHeading);
+    h += '<div style = "font-size: ' + x.rf(1) + '; padding:' + x.rf(0.7) + '; width: 95%">' + pMessage + '</div>';
+    //h += x.sp(20);
+
+    h += '<canvas id = "x050_Canvas" width = "'+ x.Width*0.97 +'" height = "'+ x.Width*0.97 +'" style = ""></div>';
+
+
+    //h += '</br>' + x.GetButton('OK', 'x.Hide(x050);x050.CallBack()', 50, 'x050_OK_Button');
+    x050.div = x.e('x050');
+    x050.div.innerHTML = h;
+    x.Show(x050);
+    x050.CallBack = pCallback;
+    scrollTo(0, 0);
+
+    const canvas = document.getElementById("x050_Canvas");
+    const ctx = canvas.getContext("2d");
+
+    ctx.beginPath();
+    ctx.fillStyle = x100.TerrainColor;
+    ctx.rect(0,0,canvas.width,canvas.width)
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    var size = x.Width/3;
+    if (x.Level == 50){
+        size = 100;
+    }
+    ctx.rect(canvas.width/2 -size/2, canvas.width - size - 10, size/2, size);
+    ctx.fillStyle = x100.BodyColor;
+    ctx.fill();
+    //ctx.stroke();
+    ctx.closePath();
+    
+    if (x.Level == 50){
+       size = x.Width/2;
+    }
+
+    ctx.beginPath();
+    ctx.rect(canvas.width/2, 10, size/2, size);
+    ctx.fillStyle = 'orange';
+    ctx.fill();
+    //ctx.stroke();
+    ctx.closePath();
+    
+    var h; 
+    if (x.Vertical){
+        h = x.sp(2); 
+
+    } else {
+        h = x.sp(10); 
+
+    }
+    h += '<table style = "width:100%"><tr>';
+
+    var Style = 'style = "width:33%; text-align:center"' 
+    h += '<td '+ Style +'>'+ x.GetButton('<', 'x050.Respond(7)', 50, 'x050_7') +'</td>';
+    h += '<td '+ Style +'>'+ x.GetButton('^', 'x050.Respond(8)', 50, 'x050_8') +'</td>';
+    h += '<td '+ Style +'>'+ x.GetButton('>', 'x050.Respond(9)', 50, 'x050_9') +'</td>';
+
+    h += '</tr><tr>';
+
+    h += '<td '+ Style +'>'+ x.GetButton('<', 'x050.Respond(4)', 50, 'x050_4') +'</td>';
+    h += '<td '+ Style +'>'+ x.GetButton('^', 'x050.Respond(5)', 50, 'x050_5') +'</td>';
+    h += '<td '+ Style +'>'+ x.GetButton('>', 'x050.Respond(6)', 50, 'x050_6') +'</td>';
+
+    h += '</tr><tr>';
+
+    h += '<td '+ Style +'>'+ x.GetButton('<', 'x050.Respond(1)', 50, 'x050_1') +'</td>';
+    h += '<td '+ Style +'>'+ x.GetButton('V', 'x050.Respond(2)', 50, 'x050_2') +'</td>';
+    h += '<td '+ Style +'>'+ x.GetButton('>', 'x050.Respond(3)', 50, 'x050_3') +'</td>';
+    
+    h += '</tr><tr>';
+    h += '</table>';
+    h += x.sp(1);
+    h += '<div style = "width:100%; text-align:center">';
+    if (x100.HealthPotions > 0){
+        
+        h += x.GetButton('HP', 'x050.UseHP()', '', 'x050_HP');
+    }
+    
+    if (x100.PoisonBombs > 0){
+        h += x.GetButton('PB', 'x050.UsePB()', '', 'x050_PB');
+    }
+    h += '</div>';
+    x.e('xRightColumn').innerHTML = h;
+    x.e('xRightColumn').style.visibility = 'visible';
+    
+    x050.UsedPB = 0; 
+    
+    setTimeout(x050.Fight, 3000)
+    //x050.Fight();
+};
+
+x050.UseHP = function () {
+  x100.HealthPotions--
+  localStorage.HealthPotions = x100.HealthPotions;
+  x050.HP = 5*x100.ArmourLevel; 
+  if (x100.HealthPotions == 0) {
+x.HideElement('x050_HP')
+  }
+};
+
+x050.UsePB = function () {
+  x100.PoisonBombs--
+  
+  localStorage.PoisonBombs = x100.PoisonBombs;
+  x050.UsedPB++
+  if (x100.PoisonBombs == 0) {
+x.HideElement('x050_PB')
+  }
+  if (!x050.Interval == null){
+      clearInterval(x050.Interval)
+      x050.Interval = setInterval(x050.Fight2, x050.HitDuration*(x100.Followers + 1)*(x050.UsedPB + 1))
+  }
+  
+};
+
+x050.Fight = function (){
+
+    x050.HP = 5*x100.ArmourLevel; 
+    if (x.Level == 50){
+x050.HP /= 2;
+    }
+    x050.EnemyHP = Math.ceil((4 + x.Level));
+    x050.EnemyDexRatio = 0.9**x.Level;
+
+    x050.HitDuration = 3000*x050.EnemyDexRatio;
+    
+    var Switch = 1;
+    x050.Fight2 = function () {
+        if (x050.DirectionOfStrike){
+            x.e('x050_'+ x050.DirectionOfStrike).style.border = '5px solid white';
+        }
+        if (x.e('x050_'+ x050.HilitedButton)){
+            x.e('x050_'+ x050.HilitedButton).style.border = '5px solid white';
+        }
+        if (x050.Responded == false){
+            x050.HP--;
+            if (x050.HP <= 0){
+                clearInterval(x050.Interval)
+                x.e('xRightColumn').style.visibility = 'hidden';
+                x.Nuggets = 0;
+                localStorage.Nuggets = x.Nuggets;                    x.Displacement -= 10;
+                x.UpdateBar()
+                x051.Begin(x050, 'You died', 'Reset level?', function (r){
+                    x.e('xRightColumn').style.visibility = 'visible';
+                    if (r == 'y') {
+                        x.Level = 1;
+                        
+                    } else {
+           
+                    }        
+                    localStorage.Level = x.Level;
+                    //x.Displacement -= 10;
+                    x100.Begin()     
+                    x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + '| Nuggets: ' + x.Nuggets;
+    
+                })
+            }
+        }
+        x050.Responded = false;
+        if (Switch%2 == 1){ //Fight
+            var DirectionOfStrike = Math.floor(Math.random()*9) + 1;
+            x050.HilitedButton = DirectionOfStrike;
+            x.e('x050_'+ x050.HilitedButton).style.border = '5px solid orange';
+            x050.CanAttack = false;
+        } else { //Between Strike
+            x.e('x050_'+ x050.HilitedButton).style.border = '5px solid white';
+            x050.CanAttack = true;
+            x050.Responded = 'break';
+            //x050.HilitedButton = false;
+        }
+
+        Switch++
+        x050.Switch = Switch;
+    }
+    x050.Interval = setInterval(x050.Fight2, x050.HitDuration*(x100.Followers + 1)*(x050.UsedPB + 1))
+};
+x050.Respond = function (pDirectionOfStrike) {
+    if (x050.Responded == true){return}
+    x050.DirectionOfStrike = pDirectionOfStrike;
+    x050.Responded = true;
+    if (pDirectionOfStrike == x050.HilitedButton){
+        x.e('x050_'+ x050.HilitedButton).style.border = '5px solid green';
+        //x050.HilitedButton = false;
+    } else {
+        if (x050.CanAttack == false){
+            //Missed block
+            x050.HP--;
+            if (x050.HP <= 0){
+                clearInterval(x050.Interval)
+                x.e('xRightColumn').style.visibility = 'hidden';
+                x051.Begin(x050, 'You died', 'Reset level?', function (r){
+                    x.e('xRightColumn').style.visibility = 'visible';
+                    if (r == 'y') {
+                        x.Level = 1;
+                        
+                    } else {
+           
+                    }        
+                    x.Nuggets = 0;
+                    localStorage.Nuggets = x.Nuggets;                    x.Displacement -= 10;
+                    localStorage.Level = x.Level;
+                    x100.Begin()     
+                    x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + '| Nuggets: ' + x.Nuggets;
+    
+                })
+            }
+        } else {
+            x050.EnemyHP = x050.EnemyHP - x100.WeaponLevel - x100.Followers;
+            x.e('x050_'+ pDirectionOfStrike).style.border = '5px solid red';
+
+            if (x050.EnemyHP <= 0){            
+                clearInterval(x050.Interval)
+                x.e('xRightColumn').style.visibility = 'hidden';
+                x051.Begin(x050, 'Victory!', 'Loot?', function (r){
+                    x.e('xRightColumn').style.visibility = 'visible';
+                    x.Level++
+                    localStorage.Level = x.Level;
+                      if (r == 'y') {
+                        if (x.Level <= 50) {
+                              x.Nuggets += 10*(x.Level - 1);
+                     
+                        } else {
+                              x.Nuggets += 100000
+                     
+                        }
+                         localStorage.Nuggets = x.Nuggets;
+                        x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + '| Nuggets: ' + x.Nuggets;
+
+                        x100.Begin();
+
+                    } else {
+                        //x050.EnemyHP ++;
+                        x100.Begin();
+                    } 
+                    
+                })
+            }
+
+        }
+    }    
+};
+
+var x051 = {}; // Yes/No screen
+x051.Begin = function (pCaller, pHeading, pMessage, pCallback) {
+    x.Hide(pCaller);
+    var h = x.sp(1) + x.GetHeading(pHeading);
+    h += '<div style = "font-size: ' + x.rf(1) + '; padding:' + x.rf(0.7) + '; width: 95%">' + pMessage + '</div>';
+    h += '</br>' + x.GetButton('Yes', 'x.Hide(x051);x051.CallBack(\'y\');', 50, 'x051_DefaultButton');
+    h += x.sp(0.5) + x.GetButton('No', 'x.Hide(x051);x051.CallBack(\'n\');', 50);
+    x051.div = x.e('x051');
+    x051.div.innerHTML = h;
+    x.Show(x051);
+    x.e('x051_DefaultButton').focus();
+    scrollTo(0, 0);
+    x051.CallBack = pCallback;
+};
+
+var x052 = {}; // dialogue
+x052.Begin = function (pCaller, pHeading, pMessage, pCallback) {
+    x.Hide(pCaller);
+    var h = x.sp(1) + x.GetHeading(pHeading);
+    h += '<div style = "font-size: ' + x.rf(1) + '; padding:' + x.rf(0.7) + '; width: 95%">' + pMessage + '</div>';
+    //h += x.sp(20);
+
+    h += '<canvas id = "x050_Canvas" width = "'+ x.Width*0.97 +'" height = "'+ x.Width*0.97 +'" style = ""></div>';
+
+
+    //h += '</br>' + x.GetButton('OK', 'x.Hide(x050);x050.CallBack()', 50, 'x050_OK_Button');
+    x050.div = x.e('x050');
+    x050.div.innerHTML = h;
+    x.Show(x050);
+    x050.CallBack = pCallback;
+    scrollTo(0, 0);
+
+    const canvas = document.getElementById("x050_Canvas");
+    const ctx = canvas.getContext("2d");
+
+    ctx.beginPath();
+    ctx.fillStyle = x100.TerrainColor;
+    ctx.rect(0,0,canvas.width,canvas.width)
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    var size = x.Width/3;
+    ctx.rect(canvas.width/2 -size/2, canvas.width - size - 10, size/2, size);
+    ctx.fillStyle = x100.BodyColor;
+    ctx.fill();
+    //ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(canvas.width/2, 10, size/2, size);
+    ctx.fillStyle = 'lightblue';
+    ctx.fill();
+    //ctx.stroke();
+    ctx.closePath();
+
+    
+    var h; 
+    if (x.Vertical){
+        h = x.sp(2); 
+
+    } else {
+        h = x.sp(10); 
+
+    }
+    
+    h += x.GetButton('Continue', 'x.Hide(x050);x050.CallBack()')
+
+    x.e('xRightColumn').innerHTML = h;
+    x.e('xRightColumn').style.visibility = 'visible';
+    
+};
+
+var x053 = {}; // in building
+x053.Begin = function (pCaller, pHeading, pMessage, pCallback) {
+    x.Hide(pCaller);
+    var h = x.sp(1) + x.GetHeading(pHeading);
+    h += '<div style = "font-size: ' + x.rf(1) + '; padding:' + x.rf(0.7) + '; width: 95%">' + pMessage + '</div>';
+    //h += x.sp(20);
+
+    h += '<canvas id = "x050_Canvas" width = "'+ x.Width*0.97 +'" height = "'+ x.Width*0.97 +'" style = ""></div>';
+
+
+    //h += '</br>' + x.GetButton('OK', 'x.Hide(x050);x050.CallBack()', 50, 'x050_OK_Button');
+    x050.div = x.e('x050');
+    x050.div.innerHTML = h;
+    x.Show(x050);
+    x050.CallBack = pCallback;
+    scrollTo(0, 0);
+
+    const canvas = document.getElementById("x050_Canvas");
+    const ctx = canvas.getContext("2d");
+
+    ctx.beginPath();
+    ctx.fillStyle = 'white';
+    ctx.rect(0,0,canvas.width,canvas.width)
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    var size = x.Width/3;
+    ctx.rect(canvas.width/2 -size/2, canvas.width - size - 10, size/2, size);
+    ctx.fillStyle = x100.BodyColor;
+    ctx.fill();
+    //ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(canvas.width/2, 10, size/2, size);
+    ctx.fillStyle = 'lightblue';
+    ctx.fill();
+    //ctx.stroke();
+    ctx.closePath();
+
+    
+    var h; 
+    if (x.Vertical){
+        h = x.sp(2); 
+
+    } else {
+        h = x.sp(10); 
+
+    }
+    
+    h += x.GetButton('Exit', 'x.Hide(x050);x050.CallBack()')
+
+    x.e('xRightColumn').innerHTML = h;
+    x.e('xRightColumn').style.visibility = 'visible';
+    
+};
+
+
+var x000 = {}; //Landing
+x000.NewGame = localStorage.NewGame || true;
+x000.Begin = function () {
+    var h = x.sp(1);
+    h += x.GetHeading('Welcome to')
+    h += x.sp(1);
+    h += 
+    `<span 
+    style = "
+    font-size: `+ x.Width/5 +`;
+    color:purple;
+    ">
+      R
+    </span>
+    <span 
+    style = "
+    font-size: `+ x.Width/5 +`;
+    color:orange;
+    ">
+     e
+    </span>
+    <span 
+    style = "
+    font-size: `+ x.Width/5 +`;
+    color:green;
+    ">
+     c
+    </span>
+    <span 
+    style = "
+    font-size: `+ x.Width/5 +`;
+    color:red;
+    ">
+     t
+    </span>
+    <span 
+    style = "
+    font-size: `+ x.Width/5 +`;
+    color:blue;
+    ">
+     i
+    </span>
+    <span 
+    style = "font-size: `+ x.Width/5 +`;
+    color: crimson;
+    ">
+     f
+    </span>
+    <span 
+    style = "font-size: `+ x.Width/5 +`;
+    color: lightblue;
+    ">
+     y
+    </span>
+    `;
+    
+    h += x.sp(2);
+    
+    if (x000.NewGame == true){
+h += `
+You wake up, feeling the hot sand burning your back <br>
+You know you're in the desert <br>
+But you can't remember how you got there <br>
+Terror strikes you <br>
+You can't remember your name`;
+    h += x.sp(2);
+    h += x.GetButton('Enter', 'x000.Begin2()')   
+    } else {
+    h += x.sp(2);
+    h += x.GetButton('Continue', 'x000.Begin2()')
+    h += x.GetButton('Clear data', 'x000.ClearData()')
+    }
+    
+    x000.div = x.e('x000');
+    x000.div.innerHTML = h;
+    x.Show(x000);
+  
+};
+
+x000.Begin2 = function (){
+    x.Hide(x000)
+    //document.body.requestFullscreen()
+    x.Begin()
+    x100.Begin()
+}
+
+x000.ClearData = function () {
+    x051.Begin(x000, 'Please confirm', 'Restart?', function (r){
+        if (r == 'y') {
+            localStorage.clear(); 
+            window.location.reload()
+        } else {
+            x.Show(x000)
+        } 
+    })   
+}
+
+var x100 = {}; //First Scene
+
+x.Displacement = parseInt(localStorage.Displacement) || 0;
+
+x100.Terrain_i = parseInt(localStorage.Terrain_i) || 0;
+if(localStorage.Terrain){
+    x100.Terrain = JSON.parse(localStorage.Terrain);
+} else {
+    x100.Terrain = [];
+}
+
+
+x.MaxDisplacement = parseInt(localStorage.MaxDisplacement) || 0;
+x.Level = parseInt(localStorage.Level) || 1;
+x.Nuggets = parseInt(localStorage.Nuggets) || 0;
+
+//
+x100.Begin = function () {
+//
+var h = '<canvas id = "x100_Canvas" style = "width:'+ x.Width*0.97 +'; height:'+ x.Width*0.97 +';"></canvas>';
+
+x100.div = x.e('x100');
+x100.div.innerHTML = h;
+x.Show(x100);
+
+h = x.GetButton('<', 'x100.Move(-1)', 20, 'LButton');
+h += x.GetButton('<>', 'x100.Stop()', 20, 'SButton');
+h += x.GetButton('>', 'x100.Move(1)', 20, 'RButton');
+
+x.e('xRightColumn').innerHTML = h;
+x.HideElement('SButton')
+
+const canvas = document.getElementById("x100_Canvas");
+x100.Canvas = canvas;
+
+x100.TerrainColor = 'Yellow';
+x100.SkyColor = 'Blue';
+x100.BodyColor = 'purple';
+
+if (x000.NewGame == true){
+localStorage.NewGame = false;
+x000.NewGame = false;
+const ctx = canvas.getContext("2d");
+
+var y = canvas.height*0.6;
+var sign;   
+var CharHeight;   
+
+x100.Slope = 0.3;
+for (var i = 0; i < canvas.width; i ++){
+sign = 2*Math.random();
+if (sign > 1) {
+sign = 1;
+} else {
+sign = -1;
+}
+y = y + sign*x100.Slope*Math.random()
+x100.Terrain.push(y);
+if (i == Math.floor(canvas.width)/2){
+//Height of character
+CharHeight = y;       
+}
+}
+   
+//Land
+ctx.beginPath();
+ctx.moveTo(0, 100);
+for (var i = 0; i < x100.Terrain.length; i++){
+ctx.lineTo(i, x100.Terrain[i]);
+};
+    
+ctx.fillStyle = x100.TerrainColor;
+ctx.lineTo(canvas.width, canvas.width);
+ctx.lineTo(0, canvas.width);
+ctx.stroke();
+ctx.fill();
+
+//Sky
+ctx.beginPath();
+ctx.moveTo(0, 100);
+for (var i = 0; i < x100.Terrain.length; i++){
+ctx.lineTo(i, x100.Terrain[i]);
+};
+    
+ctx.fillStyle = x100.SkyColor;
+ctx.lineTo(canvas.width, 0);
+ctx.lineTo(0, 0);
+ctx.stroke();
+ctx.fill();
+
+ctx.closePath();
+ctx.beginPath();
+ctx.rect(canvas.width/2 -5, canvas.height*0.7, 10, 10);
+    
+ctx.fillStyle = x100.BodyColor;
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+} else {
+
+}
+
+x100.Move(-1)
+setTimeout(x100.Stop, 10)
+};
+
+x100.Paint = function (pDirection){
+    x.Displacement += pDirection;
+
+    if (x.Displacement > x.MaxDisplacement){
+        x.MaxDisplacement = x.Displacement;               
+    } 
+
+    if (x.Displacement == 1000){
+    setTimeout(x100.Stop, 1000); ;
+    x050.Begin(x100, 'Stop right there!', 
+    'It\'s you! The reward is mine!!! Prepare to die!', 
+    function () {
+    x.Show(x100);
+    });   
+    }
+
+    if (x.Displacement == - 5030){
+        if (localStorage.EnteredVillage == 'true'){
+        
+        } else {//
+            localStorage.EnteredVillage = 'true';
+            x100.Stop();
+            while (x.Displacement > -5470){
+                x100.Paint(-1)
+            }
+            x052.Begin(x100, 'Halt!', 
+            `Who goes there? <br>
+            What do you mean you don\'t know?!<br>
+            My G-d, look at your wounds!<br>
+            The bandits must have gotten you<br>
+            Come with me, let\'s fix you up<br>
+            `, 
+            function () {
+
+                x053.Begin(x100, 'Small temple', 
+                    `You wake up <br>
+                    Your wounds still hurt <br>
+                    But for some reason, you feel better <br>
+                    <br>`
+                    + x.GetButton('Pray', 
+                    'x.HideElement(`PrayButton`)', 
+                    '', 
+                    'PrayButton')
+                    , 
+
+                    function (){
+                        x.Hide(x050)
+                        x100.Begin()
+                    }
+                )
+
+            });
+        }
+    }
+
+if (x.Displacement == -6150){
+    var PassFunction = function (){
+    x100.Stop()
+    x052.Begin(x100, 'West?', 
+    'Like our troubles...', 
+        function () {
+            x.Hide(x050)
+            x100.Begin()
+        });   
+    }
+    setTimeout(PassFunction, 300)
+}
+
+if (x.Displacement == -5800 && !localStorage.Mission1){
+    localStorage.Mission1 = 'true';
+    x100.Stop()
+    x052.Begin(x100, 'Please help me!', 
+    'Please deliver this letter to the my son in the next village East.', 
+        function () {
+            x.Hide(x050)
+            x100.Begin()
+        }
+    );   
+}
+
+
+const canvas = x100.Canvas;
+const ctx = canvas.getContext("2d");
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+if (pDirection == -1){
+    var y = x100.Terrain[x100.Terrain_i];
+    x100.Terrain_i--
+    if (x100.Terrain_i < 0){
+        x100.Terrain_i = 0;
+    }
+
+} else if (pDirection == 1){
+    x100.Terrain_i++
+    var y = x100.Terrain[x100.Terrain_i  + canvas.width - 1];
+    if (!y){y = canvas.height*0.6;}
+
+}
+
+var sign;
+        
+sign = 2*Math.random();
+if (sign > 1) {
+    sign = 1;
+} else {
+    sign = -1;
+}
+              
+if (x.Displacement < -10000){
+    x100.Slope = 2;
+    x100.TerrainColor = 'gray';
+
+    var Roll = Math.ceil(Math.random()*250)
+    if (Roll <= 1*(x100.Followers + 1)){
+        x.Nuggets ++;
+        //localStorage.Nuggets = x.Nuggets;
+        x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + ' | Nuggets: ' + x.Nuggets;
+    }
+} else {
+    x100.Slope = 0.3;
+    x100.TerrainColor = 'yellow';
+}
+
+if (x.Displacement > 300){  
+    x100.Slope = 5;
+}
+
+y = y + sign*x100.Slope*Math.random()
+
+if(x100.TerrainColor == 'yellow'){
+    if (y < canvas.height*0.5){
+        y = canvas.height*0.5;
+    }
+    if (y > canvas.height*0.7){
+        y = canvas.height*0.7;
+    }
+}
+
+if(x100.TerrainColor == 'gray'){
+    if (y < canvas.height*0.1){
+        y = canvas.height*0.1;
+    }
+    if (y > canvas.height*0.7){
+        y = canvas.height*0.7;
+    }
+}
+
+var CharHeight;
+CharHeight =x100.Terrain[x100.Terrain_i + Math.floor(canvas.width/2)];  
+
+if (pDirection == -1 && x100.Terrain_i == 0){
+
+    x100.Terrain.unshift(y);
+    //Terrain = Terrain.pop();
+
+} else if (pDirection == 1 && x.Displacement >= x.MaxDisplacement){
+//for (var i = 0; 
+//i < x100.Terrain.length; i++) {
+//;  
+    x100.Terrain.push(y);
+//Terrain.shift();
+}
+//localStorage.Terrain = JSON.stringify(x100.Terrain);
+ctx.beginPath()
+
+for (var i = 0; i < canvas.width; i++){
+
+    ctx.fillStyle = x100.TerrainColor;
+    ctx.lineTo(i, x100.Terrain[i + x100.Terrain_i]);
+};
+ctx.lineTo(canvas.width, canvas.width);
+ctx.lineTo(0, canvas.width);
+ctx.stroke();
+ctx.fill();
+ctx.closePath();
+
+//Sky
+ctx.beginPath();
+ctx.moveTo(0, 100);
+for (var i = 0; i < canvas.width; i++){
+    ctx.lineTo(i, x100.Terrain[i + x100.Terrain_i]);
+};
+
+//x100.SkyColor = 'Blue';
+ctx.fillStyle = x100.SkyColor;
+ctx.lineTo(canvas.width, 0);
+ctx.lineTo(0, 0);
+ctx.stroke();
+ctx.fill();
+
+//Town Wall
+if (x.Displacement > - 6000 - canvas.width && x.Displacement < -5000 + canvas.width){
+
+    var height = canvas.height*0.7;
+    CharHeight = height;
+
+    ctx.fillStyle = 'brown';
+    for (var i = -5000 - x.Displacement; i> -6000 - x.Displacement; i--){
+        ctx.beginPath();
+        ctx.rect(i, height - 15, 1, 15);
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+    }   
+
+}
+if (x.Displacement > -10000){
+    y = canvas.height*0.7;
+} else {
+    y = CharHeight - 10;
+}
+
+if (x100.Camels){
+    ctx.beginPath()
+    ctx.rect(canvas.width/2 -20, y, 40, 10);
+    ctx.fillStyle = '#ffdd80';
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();    
+    y -= 5;
+}   
+ctx.beginPath()
+ctx.rect(canvas.width/2 -5, y, 10, 10);
+ctx.fillStyle = x100.BodyColor;
+ctx.fill();
+ctx.stroke();
+ctx.closePath();    
+
+for (var i = 1; i <= x100.Followers; i++){
+
+    if (x.Displacement > -10000){
+        y = canvas.height*0.7;
+    } else {
+        y = x100.Terrain[canvas.width/2 -5 - pDirection*i*20 + x100.Terrain_i] - 10;
+    }
+    if (i < x100.Camels) {
+        ctx.beginPath()
+        ctx.rect(canvas.width/2 - pDirection*i*20 -20, y, 40, 10);
+        ctx.fillStyle = '#ffdd80';
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();    
+        y -= 5;
+    }
+
+    ctx.beginPath();
+    ctx.rect(canvas.width/2 -5 - pDirection*i*20, y, 10, 10);
+    ctx.fillStyle = 'lightblue';
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();    
+
+}
+
+if (x.Displacement > 800){//
+var size = 10;
+var Plus = 0;
+//if (x.Level == 1) {
+//size = 100;
+//Plus = 100;
+//}
+/*
+ctx.beginPath();
+ctx.rect(1200 - x.Displacement, 
+y - Plus, size, size);
+ctx.fillStyle = 'orange';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+*/
+    if (x.Level < 1){
+        var ct = 0;
+        while (ct < x.Level){
+            ctx.beginPath();
+            ctx.rect(1200 - x.Displacement + ct%5*15, y + ct, size, size);
+            ctx.fillStyle = 'orange';
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();
+            ct++
+        }
+    } else {
+        ctx.beginPath();
+        ctx.rect(1200 - x.Displacement, y, size, size);
+        ctx.fillStyle = 'orange';
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+    }
+}//
+
+if (x.Displacement > - 6000 - canvas.width
+&& x.Displacement < -5000 + canvas.width){
+height += 10; //For builings
+ctx.beginPath();
+ctx.rect(-5100 - x.Displacement, 
+height - 30, 60, 40);
+ctx.fillStyle = 'white';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.rect(-5900 - x.Displacement, 
+height - 30, 50, 50);
+ctx.fillStyle = 'white';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.rect(-5300 - x.Displacement, 
+height , 80, 30);
+ctx.fillStyle = 'white';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.rect(-5500 - x.Displacement, 
+height - 60, 140, 70);
+ctx.fillStyle = 'white';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.rect(-5700 - x.Displacement, 
+height - 30, 80, 40);
+ctx.fillStyle = 'white';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+
+
+
+//Peeps
+y = 0.7*canvas.height;
+ctx.beginPath();
+ctx.rect(-5000 - x.Displacement, 
+y, 10, 10);
+ctx.fillStyle = 'lightblue';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.rect(-5200 - x.Displacement, 
+y, 10, 10);
+ctx.fillStyle = 'lightblue';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.rect(-5550 - x.Displacement, 
+y, 10, 10);
+ctx.fillStyle = 'lightblue';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+    
+ctx.beginPath();
+ctx.rect(-5600 - x.Displacement, 
+y, 10, 10);
+ctx.fillStyle = 'lightblue';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.rect(-5800 - x.Displacement, 
+y, 10, 10);
+ctx.fillStyle = 'lightblue';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+
+ctx.beginPath();
+ctx.rect(-6000 - x.Displacement, 
+y, 10, 10);
+ctx.fillStyle = 'lightblue';
+ctx.fill();
+ctx.stroke();
+ctx.closePath();
+}
+};
+
+x100.Move = function (pDirection) {
+//
+x.HideElement('LButton')
+x.HideElement('RButton')
+x.ShowElement('SButton')
+
+if (x100.Interval){
+clearInterval(x100.Interval )
+}
+
+x100.Interval = setInterval(function(){
+    x100.Paint(pDirection)
+
+    }, 10*(x100.Followers+1)/(x100.Camels+1))
+
+};
+
+x100.Followers = parseInt(localStorage.Followers) || 0;
+//x100.Followers = 1;
+
+x053.Convince = function () {
+if (x.Nuggets < 1000){
+    return
+}
+x.Nuggets -= 1000;
+localStorage.Nuggets = x.Nuggets;
+x100.Followers++
+localStorage.Followers = x100.Followers;
+x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + ' | Nuggets: ' + x.Nuggets;
+//x.e('x053_BarracksDiv').innerHTML = 'Sure, lead the way!'
+//x.HideElement('x053_ConvinceButton')
+localStorage.Followers = x100.Followers;
+};
+
+x100.WeaponLevel = parseInt(localStorage.WeaponLevel) || 1;
+x100.ArmourLevel = parseInt(localStorage.ArmourLevel) || 1;
+
+
+x100.Stop = function () { //
+    clearInterval(x100.Interval)
+    localStorage.Nuggets = x.Nuggets;
+    localStorage.Terrain = JSON.stringify(x100.Terrain);
+    localStorage.Displacement = x.Displacement;
+    localStorage.MaxDisplacement = x.MaxDisplacement;
+    localStorage.Terrain_i = x100.Terrain_i;
+
+    x.HideElement('SButton')
+    x.ShowElement('LButton')
+    x.ShowElement('RButton')
+
+    var start = -5100 - x100.Canvas.width/2;
+    var end = start + 60;
+    if (x.Displacement >= start && x.Displacement <= end) { ///
+        while (x.Displacement > -5260){
+            x100.Paint(-1)
+        }
+        x053.Begin(x100, 'Barracks', 
+    
+        `<div id = "x053_BarracksDiv">Hello, fellow warrior!<br><br>`
+        + x.GetButton('Recruit (1000 Nuggets)', 'x053.Convince()')
+        + x.GetButton('Improve weapon ('+ x100.WeaponLevel*500 +' Nuggets)',
+        'x053.ImproveWeapon()')
+        + x.GetButton('Improve armour ('+ x100.ArmourLevel*500 +' Nuggets)',
+        'x053.ImproveArmour()')
+        +    `</div>`
+        , 
+
+        function (){
+            x.Hide(x050)
+            //x.Displacement = -5260;
+    
+            x100.Begin()
+        })
+    }
+
+var start = -5700 - x100.Canvas.width/2;
+var end = start + 80;
+
+if (x.Displacement >= start 
+&& x.Displacement <= end) { ///
+
+while (x.Displacement > -5870){
+x100.Paint(-1)
+}
+
+var h = `<div id = "x053_BankDiv">Welcome. Deposit or withdrawal?<br><br>`
+var Banked = parseInt(localStorage.BankedNuggets);
+if (Banked > 0) {
+h += x.GetButton('Withdrawal', 'x053.Withdraw()');
+
+} else {
+h += x.GetButton('Deposit', 'x053.Deposit()')
+}
+h += '</div>';
+
+x053.Begin(x100, 'Bank', h, 
+function (){
+    x.Hide(x050)
+    //x.Displacement = -5760;
+    
+    x100.Begin()
+})
+} ///
+
+var start = -5500 - x100.Canvas.width/2;
+var end = start + 140;
+if (x.Displacement >= start 
+&& x.Displacement <= end) { ///
+while (x.Displacement < -5470){
+x100.Paint(1)
+}
+x053.Begin(x100, 'Small temple', ////
+x.GetButton('Pray', 
+'x.HideElement(`PrayButton`)', 
+'', 
+'PrayButton')
+, 
+function (){
+    x.Hide(x050)
+    //x.Displacement = -5500;
+    x100.Begin()
+})////
+}///
+
+var start = -5300 - x100.Canvas.width/2;
+var end = start + 80;
+if (x.Displacement >= start 
+&& x.Displacement <= end) {
+while (x.Displacement > -5460){
+x100.Paint(-1)
+}
+
+x053.Begin(x100, 'Market', ////
+`Hi! How may I help you today?<br><br>`+
+x.GetButton('Health potion (100)', 
+'x053.GetHealthPotion()')
++ x.GetButton('Poison bomb (100)', 
+'x053.GetPoisonBomb()')
+, 
+function (){
+    x.Hide(x050)
+    //x.Displacement = -5990;
+    
+    x100.Begin()
+})////
+}
+
+var start = -5900 - x100.Canvas.width/2;
+var end = start + 50;
+if (x.Displacement >= start 
+&& x.Displacement <= end) {
+
+while (x.Displacement > -6070){
+x100.Paint(-1)
+}
+
+x053.Begin(x100, 'Stable', ////
+`Hi! How can I help you? For if I may not, I cannot. (Hehe)<br><br>`+
+x.GetButton('Hire reccamel (500)', 
+'x053.HireCamel()')
+, 
+function (){
+    x.Hide(x050)
+    //x.Displacement = -5990;
+    x100.Begin()
+})////
+}
+}; //
+
+x100.HealthPotions = parseInt(localStorage.HealthPotions) || 0;
+x053.GetHealthPotion = function (){
+if (x.Nuggets >= 100){
+x.Nuggets -= 100;
+localStorage.Nuggets = x.Nuggets;
+x100.HealthPotions++
+localStorage.HealthPotions = x100.HealthPotions;
+x.UpdateBar()
+}
+};
+
+x100.PoisonBombs = parseInt(localStorage.PoisonBombs) || 0;
+x053.GetPoisonBomb = function (){
+if (x.Nuggets >= 100){
+x.Nuggets -= 100;
+localStorage.Nuggets = x.Nuggets;
+x100.PoisonBombs++
+localStorage.PoisonBombs = x100.PoisonBombs;
+x.UpdateBar()
+}
+};
+
+x053.ImproveWeapon = function () {
+if (x.Nuggets >= x100.WeaponLevel*500){
+x.Nuggets -= x100.WeaponLevel*500;
+localStorage.Nuggets = x.Nuggets;
+x100.WeaponLevel++
+localStorage.WeaponLevel = x100.WeaponLevel;
+x053.UpdateBarracks()
+x.UpdateBar()
+}
+}
+
+x053.ImproveArmour = function () {
+if (x.Nuggets >= x100.ArmourLevel*500){
+x.Nuggets -= x100.ArmourLevel*500;
+localStorage.Nuggets = x.Nuggets;
+x100.ArmourLevel++
+localStorage.ArmourLevel = x100.ArmourLevel;
+x053.UpdateBarracks()
+x.UpdateBar()
+}
+}
+
+x053.UpdateBarracks = function (){
+var h = `Hello, fellow warrior!<br><br>`
++ x.GetButton('Recruit (1000 Nuggets)', 'x053.Convince()')
++ x.GetButton('Improve weapon ('+ x100.WeaponLevel*500 +' Nuggets)',
+'x053.ImproveWeapon()')
++ x.GetButton('Improve armour ('+ x100.ArmourLevel*500 +' Nuggets)',
+'x053.ImproveArmour()')
+
+x.e('x053_BarracksDiv').innerHTML = h;
+};
+
+x100.Camels = parseInt(localStorage.Camels) || 0;
+//x100.Camels = 1;
+x053.HireCamel = function () { //
+if (x.Nuggets >= 500){
+if (x100.Followers >= x100.Camels){
+x100.Camels++
+x.Nuggets -= 500;
+localStorage.Camels = x100.Camels;
+localStorage.Nuggets = x.Nuggets;
+x.UpdateBar();
+}
+}
+};
+
+x053.UpdateBank = function () {
+var h = `Welcome. Deposit or withdrawal?<br><br>`
+var Banked = parseInt(localStorage.BankedNuggets);
+if (Banked > 0) {
+h += x.GetButton('Withdrawal', 'x053.Withdraw()');
+
+} else {
+h += x.GetButton('Deposit', 'x053.Deposit()');
+}
+x.e("x053_BankDiv").innerHTML = h;
+};
+
+x053.Deposit = function () {
+
+localStorage.BankedNuggets = x.Nuggets;
+x.Nuggets = 0;
+localStorage.Nuggets = 0;
+localStorage.LastDeposited = new Date()
+x.UpdateBar();
+x053.UpdateBank()
+}//
+
+x053.Withdraw = function (){
+var date = new Date();
+var BankedNuggets = parseInt(localStorage.BankedNuggets) || 0;
+var OldDate = Date.parse(localStorage.LastDeposited)
+var MS = date - OldDate;
+var H = MS/1000/60/60;
+var Withdraw = BankedNuggets+ parseInt(BankedNuggets*1.1*(H))
+x.Nuggets += Withdraw;
+
+localStorage.Nuggets = x.Nuggets;
+localStorage.BankedNuggets = 0;
+x.UpdateBar();
+x053.UpdateBank()
+}
+
+x.UpdateBar = function(){//
+x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + ' | Nuggets: ' + x.Nuggets;
+};//
+
+//
+// Add custom code here END
+//
+
+x.Begin = function () {
+
+    //Determine widths of three main columns:
+    var p1, p2, p3;
+    x.Vertical = true;
+    if (innerWidth > innerHeight) { //landscape
+        x.Vertical = false;
+        //Ensure consistent rendering regardless of the device.
+        x.FontSize = parseInt(innerHeight / 28);
+        var Delta = innerWidth -innerHeight;
+        p1 = Delta / 2 / innerWidth; //0.26 *
+        p3 = p1;
+        p2 = 1 - p1 -p3;
+    } else {
+        //Ensure consistent rendering regardless of the device.
+        x.FontSize = parseInt(innerWidth / 30); //slightly smaller font because of mobile's tighter fit.
+        p1 = 0;
+        p2 = 1;
+        p3 = 0;
+    }
+    p1 = Math.round(p1 * innerWidth);
+    p2 = Math.round(p2 * innerWidth);
+    p3 = Math.round(p3 * innerWidth);
+
+    x.Width = p2;
+
+    var h = 
+    `<div id = "xToTopDiv" 
+    style = 
+    "
+    width: 1px
+    "
+    ></div>
+    
+    <table id = "xMainTable"
+    style = 
+    "
+    border-collapse: collapse; 
+    width: 100%; 
+    padding: 0px
+    "
+    >
+    
+    <row>
+
+    <!-- Main Working Space -->
+    <td id = "xMiddleColumn" 
+    style = 
+    "
+    padding: ` + x.rf(0.2) + `; 
+    `
+    if (x.Vertical) {
+        h += 'width:100%;';
+    } else {
+        h += 'width:50%;';
+
+    }
+    h +=
+    `font-family: sans-serif; 
+    font-size: ` + x.rf(1) + `; 
+    vertical-align: top; 
+    color: `+ x.ThemeColor2 +`
+    "
+    >`;
+
+    h += x.GetMainDiv('xCancel');
+    h += x.GetMainDiv('xWait');
+    h += x.GetMainDiv('x050');
+    h += x.GetMainDiv('x051');
+    h += x.GetMainDiv('x090');
+    h += x.GetMainDiv('x100');
+    h += x.GetMainDiv('x200');
+    h += x.GetMainDiv('x300');
+    h += x.GetMainDiv('x400');
+    h += x.GetMainDiv('x000');
+
+    //Add custom screens here START
+
+    //Add custom screens here END
+
+    h += `
+    </td>
+`
+if (!x.Vertical){
+    h += 
+    `
+    <!-- Blank column right -->
+    <td id = "xRightColumn" 
+    style = 
+    "
+    padding: 0px; 
+    width:50%; 
+    vertical-align:top;
+    "
+    ></td>
+    `    
+}
+h +=
+`
+    </row>
+    </table>`;
+
+if (x.Vertical){
+    h += 
+    `
+    <div id = "xRightColumn" 
+    style = 
+    "
+    padding: 0px; 
+    width:100%; 
+    vertical-align:top;
+    "
+    ></div>
+    `
+}
+
+        //Only to show on mobile once passed logon. Must call x.Begin again once in full-screen.
+        h += 
+        `<div id = "xFullScreenDiv" onclick = "x.ChangeFullScreen()" 
+        style = 
+        "
+        position:fixed; 
+        bottom:0; 
+        right:0; 
+        background-color:gray; 
+        color: white; 
+        font-size: `+ x.rf(1) +`; 
+        padding: `+ x.rf(1) +`
+        "
+        >Level `+ x.Level +` | Nuggets: `+ x.Nuggets +`</div>`;
+
+    x.e('xOuterFrame').innerHTML = h;
+
+    //Required by x090 Date Picker:
+    document.addEventListener('keydown', function (event) {
+        x.DocumentKeyEvent = event;
+    });
+
+    // Let browser ask for confirmation if user (accidentally) tries to leave our "one-page" wapp:
+    window.onbeforeunload = function () {
+    
+                return true;
+    };
+
+    //*******
+    //Disable browser dev tools(to some extent) by NOT commenting out below:
+    //*******
+
+    /*
+
+    const scope = document.querySelector("body");
+    scope.addEventListener("contextmenu", function (event) {
+        event.preventDefault();
+    });
+    document.onkeydown = function (e) {
+        //Prevent f12
+        if (event.keyCode == 123) {
+            return false;
+        }
+        //Prevent CTRL + SHIFT + I
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+            return false;
+        }
+        //Prevent CTRL + SHIFT + J
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+            return false;
+        }
+        //Prevent CTRL + SHIFT + C
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+            return false;
+        }
+        //Prevent CTRL U
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+            return false;
+        }
+    }
+    //*******
+
+*/
+window.onorientationchange = function (){
+x100.Stop()
+}
+};
+
+x.Begin();
+x000.Begin();
+
+</script>
+
+</body>
+</html>
