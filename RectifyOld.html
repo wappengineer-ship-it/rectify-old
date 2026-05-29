@@ -2,74 +2,17 @@
 <head>
 <title>Rectify</title>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=11">
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-<link rel="icon" href="favicon.ico" type="image/x-icon">';
-<style> body {overflow-x: hidden} button:hover {outline: 2px solid rgb(100,100,100)} button:focus {outline: 2px solid rgb(100,100,100)}
- input:hover {outline: 2px solid rgb(100,100,100)} input:focus {outline: 2px solid rgb(100,100,100)}
- textarea:hover {outline: 2px solid rgb(100,100,100)} textarea:focus {outline: 2px solid rgb(100,100,100)}
-</style>
-</head>';
-<body style="padding:0px; background-color:rgb(97, 97, 97); margin:0px">
-<div id = "xOuterFrame" style = "position: fixed; top:0; left:0; right:0; bottom:0; overflow:auto; background-color:lightgray"><br/><br/><span style = "font-family:sans-serif; font-size:28px">' + x.SystemName + ' base code loading...</span><br /></div>
+<!--<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.ico" type="image/x-icon">-->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main id = "xOuterFrame">
+    <span id="xLoadingSpan">Rectify base code loading...</span>
+</main>
+
+<script src="Globals.js"></script>
 <script>
-
-///Globals
-var x = {};
-
-
-x.e = function (p_id) {
-    return document.getElementById(p_id);
-};
-
-x.rf = function (pScale) { //rf = Relative Font size
-    return Math.round(pScale * x.FontSize) + 'px';
-};
-
-x.GetMainDiv = function (p_id) {
-    return '<div id = "' + p_id + '" style = "width:100%; display:none"></div>';
-};
-
-x.sp = function (pHeight) { //GetSpacer
-    return '<div style="width:100%; height:' + x.rf(pHeight) + '"></div>';
-};
-
-x.GetHeading = function (pText, optionalAlign) {
-    optionalAlign = optionalAlign || 'left';
-    var padding = x.rf(0.3) + ' ' + x.rf(0.2) + ' ' + x.rf(0.3) + ' ' + x.rf(0.4);
-    return '<div style = "text-align: ' + optionalAlign + '; color:white; border-radius:' + x.rf(0.3) + ';  background-color: gray ; width:98%; padding:' + padding + '; font-weight:bold; font-size:' + x.rf(1.1) + '">' + pText + '</div>';
-};
-
-x.GetButton = function (pText, pOnClick, pWidth, optional_id, optionalPadding, optionalAlign) {
-    optionalPadding = optionalPadding || 0.55;
-    optionalAlign = optionalAlign || 'center';
-    var id = '';
-    if (optional_id) {
-        id = 'id = "' + optional_id + '"';
-    }
-    return '<button ' + id + ' onclick = "' + pOnClick + '" style = "border: 5px solid white;background-color:lightgray; color: '+ x.ThemeColor2 +';border-radius:' + x.rf(0.3) + '; text-align:' + optionalAlign + '; width:' + pWidth + '%; padding:' + x.rf(optionalPadding) + '; font-size:' + x.rf(1.1) + '; ">' + pText + '</button>';
-};
-
-
-x.Show = function (pScreen) {
-    pScreen.div.style.display = 'inline-block';
-    scrollTo(0, pScreen.pageYOffset || 0);
-};
-
-x.Hide = function (pScreen) {
-    pScreen.pageYOffset = pageYOffset;
-    pScreen.div.style.display = 'none';
-};
-
-x.ShowElement = function (p_id) {
-    var e = x.e(p_id);
-    e.style.display = 'inline-block';
-};
-
-x.HideElement = function (p_id) {
-    var e = x.e(p_id);
-    e.style.display = 'none';
-};
 
 
 var x050 = {}; // fight
@@ -80,20 +23,39 @@ x050.Begin = function (pCaller, pHeading, pMessage, pCallback) {
     
     //x100.Paint(1)
     
-    var h = x.sp(1) + x.GetHeading(pHeading);
-    h += '<div style = "font-size: ' + x.rf(1) + '; padding:' + x.rf(0.7) + '; width: 95%">' + pMessage + '</div>';
-    //h += x.sp(20);
-
-    h += '<canvas id = "x050_Canvas" width = "'+ x.Width*0.97 +'" height = "'+ x.Width*0.97 +'" style = ""></div>';
+    var h = '';
+    
+    h += '<canvas id = "x050_Canvas"></canvas>';
 
 
-    //h += '</br>' + x.GetButton('OK', 'x.Hide(x050);x050.CallBack()', 50, 'x050_OK_Button');
+
+    
+    h += '<div id="X050_FightDiv">';
+
+    h += '<div>'+ x.GetButton('<', 'x050.Respond(7)', 'x050_7') +'</div>';
+    h += '<div>'+ x.GetButton('^', 'x050.Respond(8)', 'x050_8') +'</div>';
+    h += '<div>'+ x.GetButton('>', 'x050.Respond(9)', 'x050_9') +'</div>';
+
+
+    h += '<div>'+ x.GetButton('<', 'x050.Respond(4)', 'x050_4') +'</div>';
+    h += '<div>'+ x.GetButton('^', 'x050.Respond(5)', 'x050_5') +'</div>';
+    h += '<div>'+ x.GetButton('>', 'x050.Respond(6)', 'x050_6') +'</div>';
+
+
+    h += x.GetButton('<', 'x050.Respond(1)', 'x050_1');
+    h += x.GetButton('V', 'x050.Respond(2)', 'x050_2');
+    h += x.GetButton('>', 'x050.Respond(3)', 'x050_3');
+     
+    h += x.GetButton('HP', 'x050.UseHP()', 'x050_HP');
+    h += x.GetButton('PB', 'x050.UsePB()', 'x050_PB');
+    h += '</div>';
+    
     x050.div = x.e('x050');
     x050.div.innerHTML = h;
-    x.Show(x050);
+    x.e('x050').style.display = 'grid';    
     x050.CallBack = pCallback;
-    scrollTo(0, 0);
 
+    
     const canvas = document.getElementById("x050_Canvas");
     const ctx = canvas.getContext("2d");
 
@@ -104,11 +66,11 @@ x050.Begin = function (pCaller, pHeading, pMessage, pCallback) {
     ctx.closePath();
 
     ctx.beginPath();
-    var size = x.Width/3;
+    var size = 50;
     if (x.Level == 50){
         size = 100;
     }
-    ctx.rect(canvas.width/2 -size/2, canvas.width - size - 10, size/2, size);
+    ctx.rect(canvas.width/2 -size/2, canvas.height - size - 10, size/1.5, size);
     ctx.fillStyle = x100.BodyColor;
     ctx.fill();
     //ctx.stroke();
@@ -119,54 +81,11 @@ x050.Begin = function (pCaller, pHeading, pMessage, pCallback) {
     }
 
     ctx.beginPath();
-    ctx.rect(canvas.width/2, 10, size/2, size);
+    ctx.rect(canvas.width/2, 10, size/1.5, size);
     ctx.fillStyle = 'orange';
     ctx.fill();
     //ctx.stroke();
     ctx.closePath();
-    
-    var h; 
-    if (x.Vertical){
-        h = x.sp(2); 
-
-    } else {
-        h = x.sp(10); 
-
-    }
-    h += '<table style = "width:100%"><tr>';
-
-    var Style = 'style = "width:33%; text-align:center"' 
-    h += '<td '+ Style +'>'+ x.GetButton('<', 'x050.Respond(7)', 50, 'x050_7') +'</td>';
-    h += '<td '+ Style +'>'+ x.GetButton('^', 'x050.Respond(8)', 50, 'x050_8') +'</td>';
-    h += '<td '+ Style +'>'+ x.GetButton('>', 'x050.Respond(9)', 50, 'x050_9') +'</td>';
-
-    h += '</tr><tr>';
-
-    h += '<td '+ Style +'>'+ x.GetButton('<', 'x050.Respond(4)', 50, 'x050_4') +'</td>';
-    h += '<td '+ Style +'>'+ x.GetButton('^', 'x050.Respond(5)', 50, 'x050_5') +'</td>';
-    h += '<td '+ Style +'>'+ x.GetButton('>', 'x050.Respond(6)', 50, 'x050_6') +'</td>';
-
-    h += '</tr><tr>';
-
-    h += '<td '+ Style +'>'+ x.GetButton('<', 'x050.Respond(1)', 50, 'x050_1') +'</td>';
-    h += '<td '+ Style +'>'+ x.GetButton('V', 'x050.Respond(2)', 50, 'x050_2') +'</td>';
-    h += '<td '+ Style +'>'+ x.GetButton('>', 'x050.Respond(3)', 50, 'x050_3') +'</td>';
-    
-    h += '</tr><tr>';
-    h += '</table>';
-    h += x.sp(1);
-    h += '<div style = "width:100%; text-align:center">';
-    if (x100.HealthPotions > 0){
-        
-        h += x.GetButton('HP', 'x050.UseHP()', '', 'x050_HP');
-    }
-    
-    if (x100.PoisonBombs > 0){
-        h += x.GetButton('PB', 'x050.UsePB()', '', 'x050_PB');
-    }
-    h += '</div>';
-    x.e('xRightColumn').innerHTML = h;
-    x.e('xRightColumn').style.visibility = 'visible';
     
     x050.UsedPB = 0; 
     
@@ -179,7 +98,7 @@ x050.UseHP = function () {
   localStorage.HealthPotions = x100.HealthPotions;
   x050.HP = 5*x100.ArmourLevel; 
   if (x100.HealthPotions == 0) {
-x.HideElement('x050_HP')
+x.Hide('x050_HP')
   }
 };
 
@@ -189,7 +108,7 @@ x050.UsePB = function () {
   localStorage.PoisonBombs = x100.PoisonBombs;
   x050.UsedPB++
   if (x100.PoisonBombs == 0) {
-x.HideElement('x050_PB')
+x.Hide('x050_PB')
   }
   if (!x050.Interval == null){
       clearInterval(x050.Interval)
@@ -221,12 +140,10 @@ x050.HP /= 2;
             x050.HP--;
             if (x050.HP <= 0){
                 clearInterval(x050.Interval)
-                x.e('xRightColumn').style.visibility = 'hidden';
                 x.Nuggets = 0;
                 localStorage.Nuggets = x.Nuggets;                    x.Displacement -= 10;
                 x.UpdateBar()
-                x051.Begin(x050, 'You died', 'Reset level?', function (r){
-                    x.e('xRightColumn').style.visibility = 'visible';
+                x051.Begin('x050', 'You died', 'Reset level?', function (r){
                     if (r == 'y') {
                         x.Level = 1;
                         
@@ -236,7 +153,7 @@ x050.HP /= 2;
                     localStorage.Level = x.Level;
                     //x.Displacement -= 10;
                     x100.Begin()     
-                    x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + '| Nuggets: ' + x.Nuggets;
+                    x.e('xBottomBar').innerHTML = 'Level ' + x.Level + '| Nuggets: ' + x.Nuggets;
     
                 })
             }
@@ -272,9 +189,7 @@ x050.Respond = function (pDirectionOfStrike) {
             x050.HP--;
             if (x050.HP <= 0){
                 clearInterval(x050.Interval)
-                x.e('xRightColumn').style.visibility = 'hidden';
-                x051.Begin(x050, 'You died', 'Reset level?', function (r){
-                    x.e('xRightColumn').style.visibility = 'visible';
+                x051.Begin('x050', 'You died', 'Reset level?', function (r){
                     if (r == 'y') {
                         x.Level = 1;
                         
@@ -285,7 +200,7 @@ x050.Respond = function (pDirectionOfStrike) {
                     localStorage.Nuggets = x.Nuggets;                    x.Displacement -= 10;
                     localStorage.Level = x.Level;
                     x100.Begin()     
-                    x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + '| Nuggets: ' + x.Nuggets;
+                    x.e('xBottomBar').innerHTML = 'Level ' + x.Level + '| Nuggets: ' + x.Nuggets;
     
                 })
             }
@@ -295,9 +210,7 @@ x050.Respond = function (pDirectionOfStrike) {
 
             if (x050.EnemyHP <= 0){            
                 clearInterval(x050.Interval)
-                x.e('xRightColumn').style.visibility = 'hidden';
-                x051.Begin(x050, 'Victory!', 'Loot?', function (r){
-                    x.e('xRightColumn').style.visibility = 'visible';
+                x051.Begin('x050', 'Victory!', 'Loot?', function (r){
                     x.Level++
                     localStorage.Level = x.Level;
                       if (r == 'y') {
@@ -309,7 +222,7 @@ x050.Respond = function (pDirectionOfStrike) {
                      
                         }
                          localStorage.Nuggets = x.Nuggets;
-                        x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + '| Nuggets: ' + x.Nuggets;
+                        x.e('xBottomBar').innerHTML = 'Level ' + x.Level + '| Nuggets: ' + x.Nuggets;
 
                         x100.Begin();
 
@@ -330,8 +243,8 @@ x051.Begin = function (pCaller, pHeading, pMessage, pCallback) {
     x.Hide(pCaller);
     var h = x.sp(1) + x.GetHeading(pHeading);
     h += '<div style = "font-size: ' + x.rf(1) + '; padding:' + x.rf(0.7) + '; width: 95%">' + pMessage + '</div>';
-    h += '</br>' + x.GetButton('Yes', 'x.Hide(x051);x051.CallBack(\'y\');', 50, 'x051_DefaultButton');
-    h += x.sp(0.5) + x.GetButton('No', 'x.Hide(x051);x051.CallBack(\'n\');', 50);
+    h += '</br>' + x.GetButton('Yes', 'x.Hide(`x051`);x051.CallBack(\'y\');', 'x051_DefaultButton');
+    h += x.sp(0.5) + x.GetButton('No', 'x.Hide(`x051`);x051.CallBack(\'n\');');
     x051.div = x.e('x051');
     x051.div.innerHTML = h;
     x.Show(x051);
@@ -350,7 +263,7 @@ x052.Begin = function (pCaller, pHeading, pMessage, pCallback) {
     h += '<canvas id = "x050_Canvas" width = "'+ x.Width*0.97 +'" height = "'+ x.Width*0.97 +'" style = ""></div>';
 
 
-    //h += '</br>' + x.GetButton('OK', 'x.Hide(x050);x050.CallBack()', 50, 'x050_OK_Button');
+    //h += '</br>' + x.GetButton('OK', 'x.Hide('x050');x050.CallBack()', 50, 'x050_OK_Button');
     x050.div = x.e('x050');
     x050.div.innerHTML = h;
     x.Show(x050);
@@ -391,10 +304,8 @@ x052.Begin = function (pCaller, pHeading, pMessage, pCallback) {
 
     }
     
-    h += x.GetButton('Continue', 'x.Hide(x050);x050.CallBack()')
+    h += x.GetButton('Continue', 'x.Hide(`x050`);x050.CallBack()')
 
-    x.e('xRightColumn').innerHTML = h;
-    x.e('xRightColumn').style.visibility = 'visible';
     
 };
 
@@ -408,7 +319,7 @@ x053.Begin = function (pCaller, pHeading, pMessage, pCallback) {
     h += '<canvas id = "x050_Canvas" width = "'+ x.Width*0.97 +'" height = "'+ x.Width*0.97 +'" style = ""></div>';
 
 
-    //h += '</br>' + x.GetButton('OK', 'x.Hide(x050);x050.CallBack()', 50, 'x050_OK_Button');
+    //h += '</br>' + x.GetButton('OK', 'x.Hide('x050');x050.CallBack()', 50, 'x050_OK_Button');
     x050.div = x.e('x050');
     x050.div.innerHTML = h;
     x.Show(x050);
@@ -449,10 +360,8 @@ x053.Begin = function (pCaller, pHeading, pMessage, pCallback) {
 
     }
     
-    h += x.GetButton('Exit', 'x.Hide(x050);x050.CallBack()')
+    h += x.GetButton('Exit', 'x.Hide(`x050`);x050.CallBack()')
 
-    x.e('xRightColumn').innerHTML = h;
-    x.e('xRightColumn').style.visibility = 'visible';
     
 };
 ///End globals
@@ -461,96 +370,47 @@ x053.Begin = function (pCaller, pHeading, pMessage, pCallback) {
 var x000 = {}; //Landing
 x000.NewGame = localStorage.NewGame || true;
 x000.Begin = function () {
-    var h = x.sp(1);
-    h += x.GetHeading('Welcome to')
-    h += x.sp(1);
-    h += 
-    `<span 
-    style = "
-    font-size: `+ x.Width/5 +`;
-    color:purple;
-    ">
-      R
-    </span>
-    <span 
-    style = "
-    font-size: `+ x.Width/5 +`;
-    color:orange;
-    ">
-     e
-    </span>
-    <span 
-    style = "
-    font-size: `+ x.Width/5 +`;
-    color:green;
-    ">
-     c
-    </span>
-    <span 
-    style = "
-    font-size: `+ x.Width/5 +`;
-    color:red;
-    ">
-     t
-    </span>
-    <span 
-    style = "
-    font-size: `+ x.Width/5 +`;
-    color:blue;
-    ">
-     i
-    </span>
-    <span 
-    style = "font-size: `+ x.Width/5 +`;
-    color: crimson;
-    ">
-     f
-    </span>
-    <span 
-    style = "font-size: `+ x.Width/5 +`;
-    color: lightblue;
-    ">
-     y
-    </span>
-    `;
-    
-    h += x.sp(2);
-    
+    var h = '<div></div>'; //Column 1
+    h += '<div>'; //Column 2
+    h += '<h1>Welcome to</h1>'
+    h += '<h2>Rectify</h2>';    
     if (x000.NewGame == true){
-h += `
-You wake up, feeling the hot sand burning your back <br>
-You know you're in the desert <br>
-But you can't remember how you got there <br>
-Terror strikes you <br>
-You can't remember your name`;
-    h += x.sp(2);
-    h += x.GetButton('Enter', 'x000.Begin2()')   
+        h += `
+        <p>You wake up, feeling the hot sand burning your back <br>
+        You know you're in the desert <br>
+        But you can't remember how you got there <br>
+        Terror strikes you <br>
+        You can't remember your name</p>`;
+        h += '<div class="CenterDiv">';
+        h += x.GetButton('Enter', 'x000.Begin2()');
+        h += '</div>';                                                  
     } else {
-    h += x.sp(2);
-    h += x.GetButton('Continue', 'x000.Begin2()')
-    h += x.GetButton('Clear data', 'x000.ClearData()')
+        h += '<div class="CenterDiv">';
+        h += x.GetButton('Continue', 'x000.Begin2()');
+        h += x.GetButton('Clear data', 'x000.ClearData()');
+        h += '</div>';
     }
+    h += '</div>'; //End column 2
+
+    h += '<div></div>'; //Column 3
     
-    x000.div = x.e('x000');
-    x000.div.innerHTML = h;
-    x.Show(x000);
-  
+    x.e('x000').innerHTML = h;
+    x.e('x000').style.display = 'grid';
+    
 };
 
 x000.Begin2 = function (){
-    x.Hide(x000)
-    //document.body.requestFullscreen()
-    x.Begin()
+    x.Hide('x000')
     x100.Begin()
 }
 
 x000.ClearData = function () {
-    x051.Begin(x000, 'Please confirm', 'Restart?', function (r){
+    x051.Begin('x000', 'Please confirm', 'Restart?', function (r){
         if (r == 'y') {
             localStorage.clear(); 
             window.location.reload()
         } else {
-            x.Show(x000)
+            x.e('x000').style.display = 'grid';
         } 
     })   
 }
@@ -571,21 +431,22 @@ x.MaxDisplacement = parseInt(localStorage.MaxDisplacement) || 0;
 x.Level = parseInt(localStorage.Level) || 1;
 x.Nuggets = parseInt(localStorage.Nuggets) || 0;
 
-//
 x100.Begin = function () {
-    //
-    var h = '<canvas id = "x100_Canvas" style = "width:'+ x.Width*0.97 +'; height:'+ x.Width*0.97 +';"></canvas>';
+    var h = '<div>'
+    h += '<canvas id = "x100_Canvas"></canvas>';
+    h += '</div>';
+    
+    h += '<div class="CenterDiv">';
+    h += x.GetButton('<', 'x100.Move(-1)', 'LeftButton');
+    h += x.GetButton('<>', 'x100.Stop()', 'StopButton');
+    h += x.GetButton('>', 'x100.Move(1)', 'RightButton');
+    h += '</div>';
 
     x100.div = x.e('x100');
     x100.div.innerHTML = h;
-    x.Show(x100);
-
-    h = x.GetButton('<', 'x100.Move(-1)', 20, 'LButton');
-    h += x.GetButton('<>', 'x100.Stop()', 20, 'SButton');
-    h += x.GetButton('>', 'x100.Move(1)', 20, 'RButton');
-
-    x.e('xRightColumn').innerHTML = h;
-    x.HideElement('SButton')
+    x.e('x100').style.display = 'grid';
+    
+    x.Hide('StopButton')
 
     const canvas = document.getElementById("x100_Canvas");
     x100.Canvas = canvas;
@@ -670,7 +531,7 @@ x100.Paint = function (pDirection){
 
     if (x.Displacement == 1000){
         setTimeout(x100.Stop, 1000); 
-        x050.Begin(x100, 'Stop right there!', 
+        x050.Begin('x100', 'Stop right there!', 
         'It\'s you! The reward is mine!!! Prepare to die!', 
         function () {
             x.Show(x100);
@@ -701,13 +562,13 @@ x100.Paint = function (pDirection){
                     But for some reason, you feel better <br>
                     <br>`
                     + x.GetButton('Pray', 
-                    'x.HideElement(`PrayButton`)', 
+                    'x.Hide(`PrayButton`)', 
                     '', 
                     'PrayButton')
                     , 
 
                     function (){
-                        x.Hide(x050)
+                        x.Hide('x050')
                         x100.Begin()
                     }
                 )
@@ -722,7 +583,7 @@ x100.Paint = function (pDirection){
     x052.Begin(x100, 'West?', 
     'Like our troubles...', 
         function () {
-            x.Hide(x050)
+            x.Hide('x050')
             x100.Begin()
         });   
     }
@@ -735,7 +596,7 @@ x100.Paint = function (pDirection){
         x052.Begin(x100, 'Please help me!', 
         'Please deliver this letter to the my son in the next village East.', 
             function () {
-                x.Hide(x050)
+                x.Hide('x050')
                 x100.Begin()
             }
         );   
@@ -777,7 +638,7 @@ x100.Paint = function (pDirection){
         if (Roll <= 1*(x100.Followers + 1)){
             x.Nuggets ++;
             //localStorage.Nuggets = x.Nuggets;
-            x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + ' | Nuggets: ' + x.Nuggets;
+            x.e('xBottomBar').innerHTML = 'Level ' + x.Level + ' | Nuggets: ' + x.Nuggets;
         }
     } else {
         x100.Slope = 0.3;
@@ -1051,9 +912,9 @@ x100.Paint = function (pDirection){
 
 x100.Move = function (pDirection) {
     //
-    x.HideElement('LButton')
-    x.HideElement('RButton')
-    x.ShowElement('SButton')
+    x.Hide('LeftButton')
+    x.Hide('RightButton')
+    x.ShowElement('StopButton')
 
     if (x100.Interval){
     clearInterval(x100.Interval )
@@ -1077,9 +938,9 @@ x100.Move = function (pDirection) {
     localStorage.Nuggets = x.Nuggets;
     x100.Followers++
     localStorage.Followers = x100.Followers;
-    x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + ' | Nuggets: ' + x.Nuggets;
+    x.e('xBottomBar').innerHTML = 'Level ' + x.Level + ' | Nuggets: ' + x.Nuggets;
     //x.e('x053_BarracksDiv').innerHTML = 'Sure, lead the way!'
-    //x.HideElement('x053_ConvinceButton')
+    //x.Hide('x053_ConvinceButton')
     localStorage.Followers = x100.Followers;
 };
 
@@ -1095,9 +956,9 @@ x100.Stop = function () { //
     localStorage.MaxDisplacement = x.MaxDisplacement;
     localStorage.Terrain_i = x100.Terrain_i;
 
-    x.HideElement('SButton')
-    x.ShowElement('LButton')
-    x.ShowElement('RButton')
+    x.Hide('StopButton')
+    x.ShowElement('LeftButton')
+    x.ShowElement('RightButton')
 
     var start = -5100 - x100.Canvas.width/2;
     var end = start + 60;
@@ -1117,7 +978,7 @@ x100.Stop = function () { //
         , 
 
         function (){
-            x.Hide(x050)
+            x.Hide('x050')
             //x.Displacement = -5260;
     
             x100.Begin()
@@ -1144,7 +1005,7 @@ x100.Stop = function () { //
 
     x053.Begin(x100, 'Bank', h, 
         function (){
-            x.Hide(x050)
+            x.Hide('x050')
             //x.Displacement = -5760;
             
             x100.Begin()
@@ -1159,12 +1020,12 @@ x100.Stop = function () { //
     }
     x053.Begin(x100, 'Small temple', ////
         x.GetButton('Pray', 
-            'x.HideElement(`PrayButton`)', 
+            'x.Hide(`PrayButton`)', 
             '', 
             'PrayButton')
         , 
         function (){
-            x.Hide(x050)
+            x.Hide('x050')
             //x.Displacement = -5500;
             x100.Begin()
         })////
@@ -1185,7 +1046,7 @@ x100.Stop = function () { //
             'x053.GetPoisonBomb()')
         , 
         function (){
-            x.Hide(x050)
+            x.Hide('x050')
             //x.Displacement = -5990;
             
             x100.Begin()
@@ -1204,7 +1065,7 @@ x100.Stop = function () { //
             `Hi! How can I help you? For if I may not, I cannot. (Hehe)<br><br>`+
                 x.GetButton('Hire reccamel (500)', 'x053.HireCamel()'), 
         function (){
-            x.Hide(x050)
+            x.Hide('x050')
             //x.Displacement = -5990;
             x100.Begin()
         })////
@@ -1319,7 +1180,7 @@ x053.Deposit = function () {
     }
 
     x.UpdateBar = function(){//
-    x.e('xFullScreenDiv').innerHTML = 'Level ' + x.Level + ' | Nuggets: ' + x.Nuggets;
+    x.e('xBottomBar').innerHTML = 'Level ' + x.Level + ' | Nuggets: ' + x.Nuggets;
 };//
 
 //
@@ -1328,147 +1189,28 @@ x053.Deposit = function () {
 
 x.Begin = function () {
 
-    //Determine widths of three main columns:
-    var p1, p2, p3;
-    x.Vertical = true;
-    if (innerWidth > innerHeight) { //landscape
-        x.Vertical = false;
-        //Ensure consistent rendering regardless of the device.
-        x.FontSize = parseInt(innerHeight / 28);
-        var Delta = innerWidth -innerHeight;
-        p1 = Delta / 2 / innerWidth; //0.26 *
-        p3 = p1;
-        p2 = 1 - p1 -p3;
-    } else {
-        //Ensure consistent rendering regardless of the device.
-        x.FontSize = parseInt(innerWidth / 30); //slightly smaller font because of mobile's tighter fit.
-        p1 = 0;
-        p2 = 1;
-        p3 = 0;
-    }
-    p1 = Math.round(p1 * innerWidth);
-    p2 = Math.round(p2 * innerWidth);
-    p3 = Math.round(p3 * innerWidth);
+    var h = '';
+    h += x.GetMainSection('xCancel');
+    h += x.GetMainSection('xWait');
+    h += x.GetMainSection('x050');
+    h += x.GetMainSection('x051');
+    h += x.GetMainSection('x090');
 
-    x.Width = p2;
+    h += x.GetMainSection('x100');
+    h += x.GetMainSection('x200');
+    h += x.GetMainSection('x300');
+    h += x.GetMainSection('x400');
+     h += '<section id="x000"></section>';
 
-    var h = 
-    `<div id = "xToTopDiv" 
-    style = 
-    "
-    width: 1px
-    "
-    ></div>
-    
-    <table id = "xMainTable"
-    style = 
-    "
-    border-collapse: collapse; 
-    width: 100%; 
-    padding: 0px
-    "
-    >
-    
-    <row>
 
-    <!-- Main Working Space -->
-    <td id = "xMiddleColumn" 
-    style = 
-    "
-    padding: ` + x.rf(0.2) + `; 
-    `
-    if (x.Vertical) {
-        h += 'width:100%;';
-    } else {
-        h += 'width:50%;';
-
-    }
-    h +=
-    `font-family: sans-serif; 
-    font-size: ` + x.rf(1) + `; 
-    vertical-align: top; 
-    color: `+ x.ThemeColor2 +`
-    "
-    >`;
-
-    h += x.GetMainDiv('xCancel');
-    h += x.GetMainDiv('xWait');
-    h += x.GetMainDiv('x050');
-    h += x.GetMainDiv('x051');
-    h += x.GetMainDiv('x090');
-    h += x.GetMainDiv('x100');
-    h += x.GetMainDiv('x200');
-    h += x.GetMainDiv('x300');
-    h += x.GetMainDiv('x400');
-    h += x.GetMainDiv('x000');
-
-    //Add custom screens here START
-
-    //Add custom screens here END
-
-    h += `
-    </td>
-`
-if (!x.Vertical){
     h += 
-    `
-    <!-- Blank column right -->
-    <td id = "xRightColumn" 
-    style = 
-    "
-    padding: 0px; 
-    width:50%; 
-    vertical-align:top;
-    "
-    ></td>
-    `    
-}
-h +=
-`
-    </row>
-    </table>`;
-
-if (x.Vertical){
-    h += 
-    `
-    <div id = "xRightColumn" 
-    style = 
-    "
-    padding: 0px; 
-    width:100%; 
-    vertical-align:top;
-    "
-    ></div>
-    `
-}
-
-        //Only to show on mobile once passed logon. Must call x.Begin again once in full-screen.
-        h += 
-        `<div id = "xFullScreenDiv" onclick = "x.ChangeFullScreen()" 
-        style = 
-        "
-        position:fixed; 
-        bottom:0; 
-        right:0; 
-        background-color:gray; 
-        color: white; 
-        font-size: `+ x.rf(1) +`; 
-        padding: `+ x.rf(1) +`
-        "
-        >Level `+ x.Level +` | Nuggets: `+ x.Nuggets +`</div>`;
+    `<div id = "xBottomBar">Level `+ x.Level +` | Nuggets: `+ x.Nuggets +`</div>`;
 
     x.e('xOuterFrame').innerHTML = h;
 
-    //Required by x090 Date Picker:
     document.addEventListener('keydown', function (event) {
         x.DocumentKeyEvent = event;
     });
-
-    // Let browser ask for confirmation if user (accidentally) tries to leave our "one-page" wapp:
-    window.onbeforeunload = function () {
-    
-                return true;
-    };
 
     window.onorientationchange = function (){
         x100.Stop()

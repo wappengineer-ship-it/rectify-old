@@ -1,0 +1,92 @@
+body {
+    background-color:rgb(200, 200, 200);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#xOuterFrame {
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+h1 {color: white; 
+    border-radius:5px;
+    background-color: gray ; 
+    font-weight: bold;
+    text-align: center; 
+}
+
+h2 {
+    color: purple;
+    text-align: center;
+    font-size: 4rem;
+}
+
+
+.CenterDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    font-size: 1.5rem;
+    border: 5px solid white;
+    background-color: gray; 
+    border-radius: 5px; 
+    color: white;
+    margin: 10px;
+    padding: 20px;
+}
+ 
+#xBottomBar { 
+    position:fixed; 
+    bottom:0; 
+    right:0; 
+    background-color:gray; 
+    color: white; 
+    padding: 20px;
+    font-weight: bold;
+}
+
+#x050_FightDiv {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    place-items: center;
+
+}
+
+#x000 {
+    display: grid;
+    width:100%;
+    height:100%;
+    grid-template-columns: 1fr 2fr 1fr;
+    place-items: center;
+}
+
+#x000 p {
+    text-align: center;
+    color: yellow;   
+}
+
+.MainSection {
+    display: none;
+    width:100vw;
+    height:100vh;
+    grid-template-columns: 1fr 1fr;
+}
+
+canvas {
+    width :100%;
+    height :100%;
+}
+
+@media only screen and (max-width: 480px) {
+  .MainSection {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+}
