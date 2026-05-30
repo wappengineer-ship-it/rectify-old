@@ -1,0 +1,48 @@
+
+var x000 = {}; //Landing
+x000.NewGame = localStorage.NewGame || true;
+x000.Begin = function () {
+    var h = '<div></div>'; //Column 1
+    h += '<div>'; //Column 2
+    h += '<h1>Welcome to</h1>'
+    h += '<h2>Rectify</h2>';    
+    if (x000.NewGame == true){
+        h += `
+        <p>You wake up, feeling the hot sand burning your back <br>
+        You know you're in the desert <br>
+        But you can't remember how you got there <br>
+        Terror strikes you <br>
+        You can't remember your name</p>`;
+        h += '<div class="CenterDiv">';
+        h += x.GetButton('Enter', 'x000.Begin2()');
+        h += '</div>';                                                  
+    } else {
+        h += '<div class="CenterDiv">';
+        h += x.GetButton('Continue', 'x000.Begin2()');
+        h += x.GetButton('Clear data', 'x000.ClearData()');
+        h += '</div>';
+    }
+    h += '</div>'; //End column 2
+
+    h += '<div></div>'; //Column 3
+    
+    x.e('x000').innerHTML = h;
+    x.e('x000').style.display = 'grid';
+    
+};
+
+x000.Begin2 = function (){
+    x.Hide('x000')
+    x100.Begin()
+}
+
+x000.ClearData = function () {
+    x051.Begin('x000', 'Please confirm', 'Restart?', function (r){
+        if (r == 'y') {
+            localStorage.clear(); 
+            window.location.reload()
+        } else {
+            x.e('x000').style.display = 'grid';
+        } 
+    })   
+}

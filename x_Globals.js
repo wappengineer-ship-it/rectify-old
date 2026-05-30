@@ -6,16 +6,8 @@ x.e = function (p_id) {
     return document.getElementById(p_id);
 };
 
-x.rf = function (pScale) { //rf = Relative Font size
-    return Math.round(pScale * x.FontSize) + 'px';
-};
-
 x.GetMainSection = function (p_id) {
     return '<section class="MainSection" id = "' + p_id + '"></section>';
-};
-
-x.sp = function (pHeight) { //GetSpacer
-    return '<div style="width:100%; height:' + x.rf(pHeight) + '"></div>';
 };
 
 x.GetHeading = function (pText, optionalAlign) {
@@ -38,8 +30,6 @@ x.Show = function (pScreen) {
     scrollTo(0, pScreen.pageYOffset || 0);
 };
 
-
-
 x.ShowElement = function (p_id) {
     var e = x.e(p_id);
     e.style.display = 'inline-block';
@@ -49,3 +39,6 @@ x.Hide = function (p_id) {
     var e = x.e(p_id);
     e.style.display = 'none';
 };
+
+x.Level = parseInt(localStorage.Level) || 1;
+x.Nuggets = parseInt(localStorage.Nuggets) || 0;
