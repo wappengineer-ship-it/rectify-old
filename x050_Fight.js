@@ -1,6 +1,6 @@
 
 var x050 = {}; // fight
-x050.FinalLevel = 1;
+x050.FinalLevel = 10;
 x050.Begin = function (pCaller, pHeading, pMessage, pCallback) {
     x100.Stop();
 
@@ -185,12 +185,15 @@ x050.Respond = function (pDirectionOfStrike) {
                     x.Level++
                     localStorage.Level = x.Level;
                       if (r == 'y') {
-                        if (x.Level <= 50) {
+                        if (x.Level <= x050.FinalLevel) {
                               x.Nuggets += 10*(x.Level - 1);
                      
                         } else {
-                              x.Nuggets += 100000
-                     
+                            x.Nuggets += 100000
+                            x052.Begin('x050', 'Congratulations!', 'You beat the bandits! Our hero!', function (r){
+                                localStorage.clear()
+                                window.location.reload()
+                            })
                         }
                         localStorage.Nuggets = x.Nuggets;
 

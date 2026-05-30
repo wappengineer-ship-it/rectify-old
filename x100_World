@@ -112,7 +112,7 @@ x100.Paint = function (pDirection){
         x100.MaxDisplacement = x100.Displacement;               
     } 
 
-    if (x100.Displacement == 1000){
+    if (x100.Displacement == 1000 && x.Level <= x050.FinalLevel){
         setTimeout(x100.Stop, 1000); 
         x050.Begin('x100', 'Stop right there!', 
         'It\'s you! The reward is mine!!! Prepare to die!', 
@@ -173,7 +173,9 @@ x100.Paint = function (pDirection){
         localStorage.Mission1 = 'true';
         x100.Stop()
         x052.Begin('x100', 'Please help me!', 
-        'Please deliver this letter to the my son in the next village East.', 
+        //'Please deliver this letter to the my son in the next village East.', 
+        'A warrior! Please help us with the bandits, I beg of you.', 
+
             function () {
                 x.Hide('x050')
                 x100.Begin()
@@ -366,7 +368,7 @@ x100.Paint = function (pDirection){
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
-        } else if (!(x.Level < x050.FinalLevel)) {
+        } else {
 
             if (x.Level > 1){
                 var ct = 0;
@@ -388,7 +390,7 @@ x100.Paint = function (pDirection){
                 ctx.closePath();
             }
         }
-    }   
+    }
 
     if (x100.Displacement > - 6000 - canvas.width
     && x100.Displacement < -5000 + canvas.width){
