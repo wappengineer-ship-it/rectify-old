@@ -54,10 +54,6 @@ x052.Begin = function (pCaller, pHeading, pMessage, pCallback) {
     ctx.fillStyle = x100.BodyColor;
     ctx.fill();
     ctx.closePath();
-    
-    if (x.Level == 50){
-       size = x.Width/2;
-    }
 
     ctx.beginPath();
     ctx.rect(canvas.width/2, 10, size/1.5, size);
@@ -101,10 +97,6 @@ x053.Begin = function (pCaller, pHeading, pMessage, pCallback) {
     ctx.fillStyle = x100.BodyColor;
     ctx.fill();
     ctx.closePath();
-    
-    if (x.Level == 50){
-       size = x.Width/2;
-    }
 
     ctx.beginPath();
     ctx.rect(canvas.width/2, 10, size/1.5, size);
@@ -114,110 +106,3 @@ x053.Begin = function (pCaller, pHeading, pMessage, pCallback) {
 };
 
 
-x053.GetHealthPotion = function (){
-    if (x.Nuggets >= 100){
-        x.Nuggets -= 100;
-        localStorage.Nuggets = x.Nuggets;
-        x100.HealthPotions++
-        localStorage.HealthPotions = x100.HealthPotions;
-        x.UpdateBar()
-    }
-};
-
-x053.GetPoisonBomb = function (){
-    if (x.Nuggets >= 100){
-        x.Nuggets -= 100;
-        localStorage.Nuggets = x.Nuggets;
-        x100.PoisonBombs++
-        localStorage.PoisonBombs = x100.PoisonBombs;
-        x.UpdateBar()
-    }
-};
-
-x053.ImproveWeapon = function () {
-    if (x.Nuggets >= x100.WeaponLevel*500){
-        x.Nuggets -= x100.WeaponLevel*500;
-        localStorage.Nuggets = x.Nuggets;
-        x100.WeaponLevel++
-        localStorage.WeaponLevel = x100.WeaponLevel;
-        x053.UpdateBarracks()
-        x.UpdateBar()
-    }
-};
-
-x053.ImproveArmour = function () {
-    if (x.Nuggets >= x100.ArmourLevel*500){
-        x.Nuggets -= x100.ArmourLevel*500;
-        localStorage.Nuggets = x.Nuggets;
-        x100.ArmourLevel++
-        localStorage.ArmourLevel = x100.ArmourLevel;
-        x053.UpdateBarracks()
-        x.UpdateBar()
-    }
-};
-
-x053.UpdateBarracks = function (){
-    var h = `Hello, fellow warrior!<br><br>`
-    + x.GetButton('Recruit (1000 Nuggets)', 'x053.Convince()')
-    + x.GetButton('Improve weapon ('+ x100.WeaponLevel*500 +' Nuggets)',
-    'x053.ImproveWeapon()')
-    + x.GetButton('Improve armour ('+ x100.ArmourLevel*500 +' Nuggets)',
-    'x053.ImproveArmour()')
-
-    x.e('x053_BarracksDiv').innerHTML = h;
-};
-
-x100.Camels = parseInt(localStorage.Camels) || 0;
-    //x100.Camels = 1;
-    x053.HireCamel = function () { //
-    if (x.Nuggets >= 500){
-        if (x100.Followers >= x100.Camels){
-            x100.Camels++
-            x.Nuggets -= 500;
-            localStorage.Camels = x100.Camels;
-            localStorage.Nuggets = x.Nuggets;
-            x.UpdateBar();
-        }
-    }
-};
-
-x053.UpdateBank = function () {
-    var h = '';
-    var Banked = parseInt(localStorage.BankedNuggets);
-    if (Banked > 0) {
-        h += x.GetButton('Withdrawal', 'x053.Withdraw()');
-
-    } else {
-        h += x.GetButton('Deposit', 'x053.Deposit()');
-    }
-    x.e("x053_BankDiv").innerHTML = h;
-};
-
-x053.Deposit = function () {
-
-    localStorage.BankedNuggets = x.Nuggets;
-    x.Nuggets = 0;
-    localStorage.Nuggets = 0;
-    localStorage.LastDeposited = new Date()
-    x.UpdateBar();
-    x053.UpdateBank()
-    }//
-
-    x053.Withdraw = function (){
-        var date = new Date();
-        var BankedNuggets = parseInt(localStorage.BankedNuggets) || 0;
-        var OldDate = Date.parse(localStorage.LastDeposited)
-        var MS = date - OldDate;
-        var H = MS/1000/60/60;
-        var Withdraw = BankedNuggets+ parseInt(BankedNuggets*1.1*(H))
-        x.Nuggets += Withdraw;
-
-        localStorage.Nuggets = x.Nuggets;
-        localStorage.BankedNuggets = 0;
-        x.UpdateBar();
-        x053.UpdateBank()
-    }
-
-    x.UpdateBar = function(){//
-    x.e('xBottomBar').innerHTML = 'Level ' + x.Level + ' | Nuggets: ' + x.Nuggets;
-};

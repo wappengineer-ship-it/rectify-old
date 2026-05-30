@@ -1,8 +1,9 @@
 
 var x050 = {}; // fight
+x050.FinalLevel = 1;
 x050.Begin = function (pCaller, pHeading, pMessage, pCallback) {
     x100.Stop();
-    x100.Displacement -= 10;
+
     
     x.Hide(pCaller);
     x050.CallBack = pCallback;
@@ -11,7 +12,7 @@ x050.Begin = function (pCaller, pHeading, pMessage, pCallback) {
     
     h += '<canvas id = "x050_Canvas"></canvas>';
 
-    h += '<div id="X050_FightDiv">';
+    h += '<div id="x050_FightDiv">';
 
     h += x.GetButton('<', 'x050.Respond(7)', 'x050_7');
     h += x.GetButton('^', 'x050.Respond(8)', 'x050_8');
@@ -53,16 +54,14 @@ x050.Draw = function () {
 
     ctx.beginPath();
     var size = 50;
-    if (x.Level == 50){
-        size = 100;
-    }
+    
     ctx.rect(canvas.width/2 -size/2, canvas.height - size - 10, size/1.5, size);
     ctx.fillStyle = x100.BodyColor;
     ctx.fill();
     ctx.closePath();
     
-    if (x.Level == 50){
-       size = x.Width/2;
+    if (x.Level == x050.FinalLevel){
+       size = 75;
     }
 
     ctx.beginPath();
@@ -98,7 +97,7 @@ x050.UsePB = function () {
 
 x050.Fight = function (){
     x050.HP = 5*x100.ArmourLevel; 
-    if (x.Level == 50){
+    if (x.Level == x050.FinalLevel){
         x050.HP /= 2;
     }
     x050.EnemyHP = Math.ceil((4 + x.Level));

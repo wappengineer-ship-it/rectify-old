@@ -356,41 +356,39 @@ x100.Paint = function (pDirection){
     }
 
     if (x100.Displacement > 800){//
-    var size = 10;
-    var Plus = 0;
-    //if (x.Level == 1) {
-    //size = 100;
-    //Plus = 100;
-    //}
-    /*
-    ctx.beginPath();
-    ctx.rect(1200 - x100.Displacement, 
-    y - Plus, size, size);
-    ctx.fillStyle = 'orange';
-    ctx.fill();
-    ctx.stroke();
-    ctx.closePath();
-    */
-        if (x.Level < 1){
-            var ct = 0;
-            while (ct < x.Level){
-                ctx.beginPath();
-                ctx.rect(1200 - x100.Displacement + ct%5*15, y + ct, size, size);
-                ctx.fillStyle = 'orange';
-                ctx.fill();
-                ctx.stroke();
-                ctx.closePath();
-                ct++
-            }
-        } else {
+        var size = 10;
+        if (x.Level == x050.FinalLevel) {
+            size = 20;
             ctx.beginPath();
-            ctx.rect(1200 - x100.Displacement, y, size, size);
+            ctx.rect(1200 - x100.Displacement, 
+            y - 10, size/2, size);
             ctx.fillStyle = 'orange';
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
+        } else if (!(x.Level < x050.FinalLevel)) {
+
+            if (x.Level > 1){
+                var ct = 0;
+                while (ct < x.Level){
+                    ctx.beginPath();
+                    ctx.rect(1200 - x100.Displacement + ct%5*15, y + ct, size, size);
+                    ctx.fillStyle = 'orange';
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.closePath();
+                    ct++
+                }
+            } else {
+                ctx.beginPath();
+                ctx.rect(1200 - x100.Displacement, y, size, size);
+                ctx.fillStyle = 'orange';
+                ctx.fill();
+                ctx.stroke();
+                ctx.closePath();
+            }
         }
-    }//
+    }   
 
     if (x100.Displacement > - 6000 - canvas.width
     && x100.Displacement < -5000 + canvas.width){
